@@ -21,3 +21,133 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+import java.util.Scanner;
+
+class Main {
+  public static Order readPizza(Scanner readingPizza, String pizza){
+    Order pizzaOrders= new Order();   
+    int count=0;
+    if(pizza.equals("DeepDish")){ 
+     DeepDishPizza pizza1=new DeepDishPizza();  
+      System.out.println("\nenter the type of toppings you want. Use abbreivaations. Select from mushrooms,extra cheese, pepperoni, green pepper");
+      String toppingcode= readingPizza.next();
+      int toppinglength= toppingcode.length();
+      while(count!=toppinglength){
+        
+      if(toppingcode.charAt(count)=='p'){
+      pizza1.addTopping(Restaurant.getTopping("pepperoni"));
+      
+      }
+      else if (toppingcode.charAt(count)=='e'){
+       pizza1.addTopping(Restaurant.getTopping("extra cheese"));
+        
+      }
+      else if(toppingcode.charAt(count)=='m'){
+       pizza1.addTopping(Restaurant.getTopping("mushroom"));
+        
+      }
+      else if(toppingcode.charAt(count)=='g'){
+      pizza1.addTopping(Restaurant.getTopping("green peppers"));
+        
+      } 
+      else{
+      System.out.println("\ninput is invalid!!!"); 
+        return null;
+    } count=count+1;
+        }pizzaOrders.addPizza(pizza1);
+      return pizzaOrders;
+     
+    }
+      
+    else if(pizza.equals("Traditional")){
+     TraditionalPizza pizza2= new TraditionalPizza();    
+      System.out.println("\nenter the type of toppings you want. Use abbreivaations. Select from mushrooms,extra cheese, pepperoni, green pepper");
+      String toppingcode= readingPizza.next();
+      int toppinglength= toppingcode.length();
+      while(count!=toppinglength){
+      if(toppingcode.charAt(count)=='p'){
+ pizza2.addTopping(Restaurant.getTopping("pepperoni")); 
+      }
+      else if (toppingcode.charAt(count)=='e'){
+       pizza2.addTopping(Restaurant.getTopping("extra cheese"));}    
+      else if(toppingcode.charAt(count)=='m'){   pizza2.addTopping(Restaurant.getTopping("mushroom"));
+      }
+      else if(toppingcode.charAt(count)=='g'){
+      pizza2.addTopping(Restaurant.getTopping("green peppers"));
+         }
+    else{
+      System.out.println("\ninput is invalid!!!");
+     return null; 
+    }  count=count+1; 
+      
+     } pizzaOrders.addPizza(pizza2);
+      return pizzaOrders;
+      
+       
+    }return null;
+        }
+    
+   
+   
+    
+  
+  public static Restaurant readOrder(Scanner readingPizza, String pizza, Restaurant pizza0){
+     pizza0.addOrder(readPizza(readingPizza,pizza));
+       
+   return pizza0;
+    }
+    
+    
+  
+   public static void main(String[] args) {
+    Topping p= new Topping("pepperoni", 1.29);
+    Restaurant.addTopping(p);
+    Topping e= new Topping("extra cheese",1.29);
+    Restaurant.addTopping(e);
+    Topping g= new Topping("green peppers", 0.99);
+    Restaurant.addTopping(g);
+    Topping m= new Topping("mushroom",0.99);
+    Restaurant.addTopping(m);
+    Scanner readingPizza= new Scanner(System.in);
+    System.out.println("\t\t****Welcome to Dami's Restaurant****");
+    System.out.println("\nWhat would you like to order?");
+    System.out.println("\nEnter a pizza type; either DeepDish or Traditional or press E to exit");
+    String pizza= readingPizza.next();
+    Restaurant pizza0= new Restaurant(); 
+  if(pizza.equals("DeepDish")||pizza.equals("Traditional")){
+    
+  while(pizza.equals("DeepDish")||pizza.equals("Traditional")){
+   pizza0=readOrder(readingPizza,pizza,pizza0);  
+    System.out.println("\nWould you like to add another order?Y/N");
+       String answer= readingPizza.next();
+       if(answer.equals("N")){
+      System.out.println("\nOrder Processing...");
+       pizza= "end";
+       }
+       else{
+       System.out.println("\nEnter a pizza type; either DeepDish or Traditional or press E to exit");
+       pizza= readingPizza.next();
+         }
+
+      }    
+ 
+  }
+     else if(pizza.equals("E")){
+      System.out.println("\nYou have exited. Thank you for ordering at Dami's Restaurant"); 
+      
+      readingPizza.close();
+    }
+    else{System.out.println("\nThere is something wrong with your input.");
+     System.out.println("\nYou have exited the restaurant!");
+     }
+    pizza0.printOrders();
+    if(pizza0.orderCount()<2){
+   System.out.printf("There is %d order with the priceist being %f",pizza0.orderCount(),pizza0.priciestOrder());
+      }
+  else{
+    System.out.printf("There are %d orders with the priciest being %f",pizza0.orderCount(),pizza0.priciestOrder());
+  }
+    }
+  
+      
+}
